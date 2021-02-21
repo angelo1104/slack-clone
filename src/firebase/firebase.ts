@@ -24,5 +24,8 @@ initializeApp();
 
 const auth: firebase.auth.Auth = firebase.auth();
 const db: firebase.firestore.Firestore = firebase.firestore();
+type User = firebase.User;
 
 export {auth, db}
+
+export default User;

@@ -1,14 +1,9 @@
 import Head from "next/head";
-import { useSelector } from "react-redux";
-import { State } from "../redux/store";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth'
+import Header from "../Components/Header/Header";
+import { wrapper } from "../redux/store";
+import { verifyUser } from "../firebase/firebaseAdmin";
 
 function Home(): JSX.Element {
-  const {
-    count: { count, update },
-  } = useSelector((state: State) => state);
 
   return (
     <div>
@@ -18,7 +13,7 @@ function Home(): JSX.Element {
       </Head>
 
       <main>
-        Let's build slack.
+        <Header/>
       </main>
     </div>
   );
@@ -26,15 +21,20 @@ function Home(): JSX.Element {
 
 export default Home;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/ban-ts-comment
-// @ts-ignore
-export const getServerSideProps = withAuthUserTokenSSR({})(async ({ AuthUser }) => {
-  // Optionally, get other props.
-  const token = await AuthUser.getIdToken()
+export const getServerSideProps = wrapper.getServerSideProps(async (context)=>{
+  const {store, ...etc} = context;
 
-  return {
-    props: {
-      thing: token
+  try {
+    const token = await verifyUser(etc);
+
+    return{
+      props:{
+        token
+      }
+    }
+  }catch (e) {
+    return {
+      props:{}
     }
   }
 })
