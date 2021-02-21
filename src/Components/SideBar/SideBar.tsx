@@ -53,7 +53,8 @@ const SideBarHead = styled.div`
 const SideBarMain = styled.div`
   padding: 10px 0;
   height: 100%;
-  overflow-y: scroll;
+  width: 100%;
+  overflow-y: overlay;
 
   :hover {
     ::-webkit-scrollbar {
@@ -64,6 +65,7 @@ const SideBarMain = styled.div`
   ::-webkit-scrollbar {
     width: 7px;
     display: none;
+    position: absolute;
   }
 
   ::-webkit-scrollbar-track {
@@ -75,6 +77,11 @@ const SideBarMain = styled.div`
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.5);
   }
+`;
+
+const Divider = styled.div`
+  margin-top: 5px;
+  border-top: 0.3px solid rgba(255, 255, 255, 0.2);
 `;
 
 function SideBar(): JSX.Element {
@@ -90,27 +97,12 @@ function SideBar(): JSX.Element {
       </SideBarHead>
 
       <SideBarMain>
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
-        <SideBarOption title={"Hello"} />
+        <SideBarOption title={"Hello"} Icon={"#"} />
+        <SideBarOption title={"Hello"} Icon={"#"} />
+        <SideBarOption title={"Hello"} Icon={"#"} />
+        <SideBarOption title={"Hello"} Icon={"#"} />
+        <Divider />
+        <SideBarOption title={"Channels"} Icon={KeyboardArrowDown} />
       </SideBarMain>
     </SideBarContainer>
   );

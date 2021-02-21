@@ -25,21 +25,31 @@ const SideBarOptionContainer = styled.div`
     opacity: 0.9;
     font-weight: 400;
     font-size: 16px;
+
+    .MuiSvgIcon-root {
+      margin: 0;
+    }
   }
 `;
 
 interface Props {
   title: string;
+  Icon: any;
 }
 
-function SideBarOption({ title }: Props): JSX.Element {
+function SideBarOption({ title, Icon }: Props): JSX.Element {
   function truncate(source: string, size: number) {
     return source.length > size ? source.slice(0, size - 1) + "…" : source;
   }
 
   return (
     <SideBarOptionContainer>
-      <h5>#</h5>
+      {Icon === Icon + "" && <h5>{Icon}</h5>}
+      {Icon !== Icon + "" && (
+        <h5>
+          <Icon />
+        </h5>
+      )}
       <h4>{truncate(title, 20)}</h4>
     </SideBarOptionContainer>
   );
