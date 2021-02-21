@@ -1,8 +1,6 @@
 import firebaseAdmin from "firebase-admin";
 import { GetServerSidePropsContext } from "next-redux-wrapper";
 import nookies from "nookies";
-import { AnyAction, Store } from "redux";
-import { State } from "../redux/store";
 
 if (!firebaseAdmin.apps.length){
   firebaseAdmin.initializeApp({
