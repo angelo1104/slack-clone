@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Input } from "@material-ui/core";
-import { Picker, Emoji as EmojiIcon } from "emoji-mart";
+import { Picker } from "emoji-mart";
 import { InsertEmoticon } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, State } from "../../redux/store";
 import { emojiActions } from "../../redux/emojiSlice";
-import JsxParser from "react-jsx-parser";
 
 const InputContainer = styled.div`
   width: 97%;
@@ -40,6 +39,8 @@ const InputContainer = styled.div`
 const InputWrapper = styled.div`
   width: 100%;
   padding: 15px 0;
+  height: 15%;
+  background-color: white;
 `;
 
 const Emoji = styled.div`

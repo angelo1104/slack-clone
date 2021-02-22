@@ -8,6 +8,7 @@ const ChatMainContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  padding-right: 4px;
 `;
 
 function ChatMain(): JSX.Element {
