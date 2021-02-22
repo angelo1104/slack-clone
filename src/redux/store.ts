@@ -3,6 +3,7 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { authReducer } from "./authSlice";
 import User from "../firebase/firebase";
 import { emojiReducer } from "./emojiSlice";
+import { ChatMessage, chatReducer } from "./chatSlice";
 
 export interface State {
   init: any;
@@ -12,11 +13,18 @@ export interface State {
   emoji: {
     show: boolean;
   };
+  chat: {
+    roomName: string;
+    roomId: string;
+    messages: Array<ChatMessage>;
+    loading: boolean;
+  };
 }
 
 const reducer = combineReducers({
   auth: authReducer,
   emoji: emojiReducer,
+  chat: chatReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

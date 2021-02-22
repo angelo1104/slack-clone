@@ -6,6 +6,8 @@ import { InsertEmoticon, Send } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, State } from "../../redux/store";
 import { emojiActions } from "../../redux/emojiSlice";
+import { db } from "../../firebase/firebase";
+import firebase from "firebase/app";
 
 const InputContainer = styled.div`
   width: 97%;
@@ -89,9 +91,39 @@ const Icons = styled.div`
 
 function ChatInput(): JSX.Element {
   const { show } = useSelector((state: State) => state.emoji);
+  const { roomId } = useSelector((state: State) => state.chat);
   const [message, setMessage] = useState<string>("");
 
   const dispatch: AppDispatch = useDispatch();
+
+  const sendMessage = async () => {
+    try {
+      if (roomId) {
+        const copyMessage = message;
+        setMessage("");
+        const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+        await db.collection("rooms").doc(roomId).collection("messages").add({
+          message: copyMessage,
+          user: "ishika",
+          userPhoto:
+            "https://i.pinimg.com/originals/de/7f/ed/de7fedb94947ade7029b7a8b08cd676a.jpg",
+          userId: "jelly",
+          timestamp: timestamp,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (message.length !== 0) {
+        sendMessage();
+      }
+    }
+  };
 
   return (
     <InputWrapper>
@@ -102,6 +134,7 @@ function ChatInput(): JSX.Element {
           disableUnderline={true}
           placeholder={"Message # anjali-baby"}
           value={message}
+          onKeyDown={handleKeyDown}
           onChange={(e) => setMessage(e.target.value)}
         />
 
@@ -127,7 +160,10 @@ function ChatInput(): JSX.Element {
             />
           </Emoji>
 
-          <IconButton disabled={message.length === 0}>
+          <IconButton
+            disabled={message.length === 0}
+            onClick={() => sendMessage()}
+          >
             <Send className={"send-icon"} />
           </IconButton>
         </Icons>

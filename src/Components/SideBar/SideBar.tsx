@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Create, Add, KeyboardArrowDown } from "@material-ui/icons";
 import SideBarOption from "./SideBarOption";
 import { db } from "../../firebase/firebase";
 import { useCollection } from "react-firebase-hooks/firestore";
+import { AppDispatch } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import { chatActions } from "../../redux/chatSlice";
 
 const SideBarContainer = styled.div`
   flex: 0.18;
@@ -62,6 +65,7 @@ const SideBarMain = styled.div`
   padding: 10px 0;
   height: 100%;
   width: 100%;
+  //noinspection CssInvalidPropertyValue
   overflow-y: overlay;
 
   :hover {
@@ -94,6 +98,11 @@ const Divider = styled.div`
 
 function SideBar(): JSX.Element {
   const [chatRooms, loading, error] = useCollection(db.collection("rooms"));
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(chatActions.SET_LOADING(loading));
+  }, [loading]);
 
   return (
     <SideBarContainer>
@@ -120,9 +129,28 @@ function SideBar(): JSX.Element {
               .catch((e) => console.log(e));
           }}
         />
-        {chatRooms?.docs?.map((doc: any) => {
+        {chatRooms?.docs?.map((doc: any, index: number) => {
+          if (index === 0)
+            dispatch(
+              chatActions.SET_ROOM({
+                roomId: doc.id,
+                roomName: doc.data().name,
+              }),
+            );
           return (
-            <SideBarOption key={doc.id} title={doc.data().name} Icon={"#"} />
+            <SideBarOption
+              key={doc.id}
+              title={doc.data().name}
+              Icon={"#"}
+              onClick={() => {
+                dispatch(
+                  chatActions.SET_ROOM({
+                    roomId: doc.id,
+                    roomName: doc.data().name,
+                  }),
+                );
+              }}
+            />
           );
         })}
         <Divider />

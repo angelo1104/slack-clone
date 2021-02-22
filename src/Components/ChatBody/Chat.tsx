@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { AppDispatch } from "../../redux/store";
-import { useDispatch } from "react-redux";
+import { AppDispatch, State } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { emojiActions } from "../../redux/emojiSlice";
+import { db } from "../../firebase/firebase";
+import { chatActions } from "../../redux/chatSlice";
 import ChatBubble from "./ChatBubble";
 
 const ChatContainer = styled.div`
@@ -37,35 +39,51 @@ const ChatContainer = styled.div`
 
 function Chat(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
+  const { roomId, messages } = useSelector((state: State) => state.chat);
+
+  useEffect(() => {
+    try {
+      const unsubscribe = db
+        .collection("rooms")
+        .doc(roomId)
+        .collection("messages")
+        .orderBy("timestamp")
+        .onSnapshot((snapshot) => {
+          dispatch(
+            chatActions.SET_MESSAGES(
+              snapshot.docs.map((doc) => {
+                return {
+                  message: doc.data().message,
+                  user: doc.data().user,
+                  userPhoto: doc.data().userPhoto,
+                  userId: doc.data().userId,
+                  messageId: doc.id,
+                  thread: [],
+                };
+              }),
+            ),
+          );
+        });
+
+      return () => unsubscribe();
+    } catch (e) {
+      console.log(e);
+    }
+  }, [roomId]);
 
   return (
     <ChatContainer onClick={() => dispatch(emojiActions.SET_SHOW(false))}>
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
-      <ChatBubble />
+      {messages.map((message) => {
+        return (
+          <ChatBubble
+            key={message.messageId}
+            image={message.userPhoto}
+            id={message.messageId}
+            user={message.user}
+            message={message.message}
+          />
+        );
+      })}
     </ChatContainer>
   );
 }

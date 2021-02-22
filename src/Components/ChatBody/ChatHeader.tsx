@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { InfoOutlined, PersonAddOutlined } from "@material-ui/icons";
+import { useSelector } from "react-redux";
+import { State } from "../../redux/store";
 
 const ChatHeaderContainer = styled.div`
   height: 12%;
@@ -26,7 +28,7 @@ const ChatHeaderContainer = styled.div`
 
   h3 {
     font-family: "Inter", sans-serif;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 700;
     margin: 0;
   }
@@ -40,9 +42,11 @@ const Icons = styled.div`
 `;
 
 function ChatHeader(): JSX.Element {
+  const { roomId, roomName } = useSelector((state: State) => state.chat);
+
   return (
     <ChatHeaderContainer>
-      <h3># article-ui-dart</h3>
+      <h3># {roomName}</h3>
 
       <Icons>
         <PersonAddOutlined className={"info-icon"} />
