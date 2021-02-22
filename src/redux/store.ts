@@ -2,18 +2,22 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { authReducer } from "./authSlice";
 import User from "../firebase/firebase";
+import { emojiReducer } from "./emojiSlice";
 
 export interface State {
   init: any;
   auth: {
     user: User | null;
-  }
+  };
+  emoji: {
+    show: boolean;
+  };
 }
 
 const reducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  emoji: emojiReducer,
 });
-
 
 const rootReducer = (state: any, action: any) => {
   if (action.type === HYDRATE) {

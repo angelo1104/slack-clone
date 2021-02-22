@@ -1,4 +1,5 @@
 import "../../styles/globals.scss";
+import "emoji-mart/css/emoji-mart.css";
 import { AppProps } from "next/app";
 import { wrapper } from "../redux/store";
 import Head from "next/head";
