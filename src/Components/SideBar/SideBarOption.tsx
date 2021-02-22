@@ -46,7 +46,7 @@ function SideBarOption({ title, Icon }: Props): JSX.Element {
     <SideBarOptionContainer>
       {Icon === Icon + "" && <h5>{Icon}</h5>}
       {Icon !== Icon + "" && (
-        <h5>
+        <h5 style={{ marginLeft: "-6px" }}>
           <Icon />
         </h5>
       )}

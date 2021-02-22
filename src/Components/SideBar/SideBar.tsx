@@ -16,6 +16,7 @@ const SideBarHead = styled.div`
   display: flex;
   padding: 6px 12px;
   align-items: center;
+  height: 12%;
   justify-content: space-between;
   border-top: 0.5px solid rgba(255, 255, 255, 0.2);
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.2);
@@ -27,9 +28,13 @@ const SideBarHead = styled.div`
     width: fit-content;
     display: flex;
     align-items: center;
+    margin: auto;
+    line-break: strict;
+    white-space: nowrap;
 
     .MuiSvgIcon-root {
       font-size: 20px;
+      margin: 0;
     }
   }
 
@@ -39,6 +44,7 @@ const SideBarHead = styled.div`
     border-radius: 100%;
     padding: 8px;
     font-size: 37px;
+    margin-left: 10px;
   }
 
   :hover {

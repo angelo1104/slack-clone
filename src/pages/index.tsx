@@ -4,6 +4,7 @@ import { wrapper } from "../redux/store";
 import { verifyUser } from "../firebase/firebaseAdmin";
 import styled from "styled-components";
 import SideBar from "../Components/SideBar/SideBar";
+import ChatBody from "../Components/ChatBody/ChatBody";
 
 const AppBody = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ function Home(): JSX.Element {
 
         <AppBody>
           <SideBar />
+          <ChatBody />
         </AppBody>
       </main>
     </div>
