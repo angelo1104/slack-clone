@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Create, KeyboardArrowDown } from "@material-ui/icons";
+import { Create, Add, KeyboardArrowDown } from "@material-ui/icons";
 import SideBarOption from "./SideBarOption";
+import { db } from "../../firebase/firebase";
+import { useCollection } from "react-firebase-hooks/firestore";
 
 const SideBarContainer = styled.div`
   flex: 0.18;
@@ -91,6 +93,8 @@ const Divider = styled.div`
 `;
 
 function SideBar(): JSX.Element {
+  const [chatRooms, loading, error] = useCollection(db.collection("rooms"));
+
   return (
     <SideBarContainer>
       <SideBarHead>
@@ -103,12 +107,25 @@ function SideBar(): JSX.Element {
       </SideBarHead>
 
       <SideBarMain>
-        <SideBarOption title={"Hello"} Icon={"#"} />
-        <SideBarOption title={"Hello"} Icon={"#"} />
-        <SideBarOption title={"Hello"} Icon={"#"} />
-        <SideBarOption title={"Hello"} Icon={"#"} />
+        <SideBarOption
+          title={"Channels"}
+          Icon={Add}
+          onClick={() => {
+            const channelName = prompt("Enter the chat room name.");
+
+            db.collection("rooms")
+              .add({
+                name: channelName,
+              })
+              .catch((e) => console.log(e));
+          }}
+        />
+        {chatRooms?.docs?.map((doc: any) => {
+          return (
+            <SideBarOption key={doc.id} title={doc.data().name} Icon={"#"} />
+          );
+        })}
         <Divider />
-        <SideBarOption title={"Channels"} Icon={KeyboardArrowDown} />
       </SideBarMain>
     </SideBarContainer>
   );

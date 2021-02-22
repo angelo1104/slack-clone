@@ -35,15 +35,22 @@ const SideBarOptionContainer = styled.div`
 interface Props {
   title: string;
   Icon: any;
+  onClick?: () => void;
 }
 
-function SideBarOption({ title, Icon }: Props): JSX.Element {
+function SideBarOption({ title, Icon, onClick }: Props): JSX.Element {
   function truncate(source: string, size: number) {
     return source.length > size ? source.slice(0, size - 1) + "…" : source;
   }
 
   return (
-    <SideBarOptionContainer>
+    <SideBarOptionContainer
+      onClick={() => {
+        if (onClick !== undefined) {
+          onClick();
+        }
+      }}
+    >
       {Icon === Icon + "" && <h5>{Icon}</h5>}
       {Icon !== Icon + "" && (
         <h5 style={{ marginLeft: "-6px" }}>

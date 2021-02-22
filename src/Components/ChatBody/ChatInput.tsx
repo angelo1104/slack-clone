@@ -71,6 +71,8 @@ function ChatInput(): JSX.Element {
             sheetSize={32}
             set={"apple"}
             onSelect={(emoji) =>
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
               setMessage((message) => message + emoji.native)
             }
             style={{
