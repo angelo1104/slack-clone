@@ -7,6 +7,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import { AppDispatch, State } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../../redux/chatSlice";
+import Spinner from "../Spinner/Spinner";
 
 const SideBarContainer = styled.div`
   flex: 0.18;
@@ -106,6 +107,7 @@ function SideBar(): JSX.Element {
 
   return (
     <SideBarContainer>
+      {loading && <Spinner />}
       <SideBarHead>
         <h2>
           Flutter Community
