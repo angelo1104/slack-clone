@@ -28,6 +28,7 @@ const SideBarOptionContainer = styled.div`
 
     .MuiSvgIcon-root {
       margin: 0;
+      transform: rotate(0deg);
     }
   }
 `;
