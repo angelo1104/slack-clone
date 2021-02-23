@@ -9,6 +9,7 @@ const ThreadContainer = styled.div`
   height: 100%;
   width: 35%;
   border-left: 1px solid lightgray;
+  padding-right: 4px;
 `;
 
 function Thread() {

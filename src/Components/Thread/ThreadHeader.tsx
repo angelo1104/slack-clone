@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Close } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { chatActions } from "../../redux/chatSlice";
 
 const ThreadContainer = styled.div`
   border-bottom: 1px solid lightgray;
@@ -47,6 +50,8 @@ const Icon = styled.div`
 `;
 
 function ThreadHeader() {
+  const dispatch: AppDispatch = useDispatch();
+
   return (
     <ThreadContainer>
       <ThreadLeft>
@@ -54,7 +59,7 @@ function ThreadHeader() {
         <p># -article-ui-dart</p>
       </ThreadLeft>
 
-      <Icon>
+      <Icon onClick={() => dispatch(chatActions.SET_THREAD(false))}>
         <Close />
       </Icon>
     </ThreadContainer>
