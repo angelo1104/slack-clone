@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { ChatBubbleOutline, DeleteOutlined } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
+import { chatActions } from "../../redux/chatSlice";
 
 const Icons = styled.div`
   position: absolute;
   top: 0;
   transform: translateY(-30%);
-  padding: 5px 10px;
+  padding: 3px 10px;
   display: none;
   justify-content: space-between;
   right: 30px;
@@ -70,7 +72,7 @@ const Icon = styled.div`
 
   .MuiSvgIcon-root {
     color: gray;
-    font-size: 21px;
+    font-size: 20px;
   }
 `;
 
@@ -82,12 +84,20 @@ interface Props {
 }
 
 function ChatBubble({ image, id, message, user }: Props): JSX.Element {
+  const dispatch = useDispatch();
+
   return (
     <ChatBubbleContainer>
-      <Img src={image} />
+      {/*<Img src={image} />*/}
 
       <Icons>
-        <Icon>
+        <Icon
+          onClick={() => {
+            console.log("hi");
+            dispatch(chatActions.SET_MESSAGE_ID(id));
+            dispatch(chatActions.SET_THREAD(true));
+          }}
+        >
           <ChatBubbleOutline />
         </Icon>
         <Icon>

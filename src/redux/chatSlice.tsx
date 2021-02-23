@@ -5,6 +5,8 @@ interface ChatState {
   roomId: string;
   messages: Array<ChatMessage>;
   loading: boolean;
+  messageId: string;
+  thread: boolean;
 }
 
 interface Message {
@@ -29,6 +31,8 @@ const initialState: ChatState = {
   roomId: "",
   messages: [],
   loading: false,
+  messageId: "",
+  thread: false,
 };
 
 const chatSlice = createSlice({
@@ -60,6 +64,18 @@ const chatSlice = createSlice({
         messages: action.payload,
       };
     },
+    SET_MESSAGE_ID(state: ChatState, action: PayloadAction<string>) {
+      return {
+        ...state,
+        messageId: action.payload,
+      };
+    },
+    SET_THREAD(state: ChatState, action: PayloadAction<boolean>) {
+      return {
+        ...state,
+        thread: action.payload,
+      };
+    },
   },
 });
 
@@ -67,4 +83,4 @@ const { actions: chatActions, reducer: chatReducer } = chatSlice;
 
 export { chatReducer, chatActions };
 
-export type { ChatMessage, Message };
+export type { ChatState };

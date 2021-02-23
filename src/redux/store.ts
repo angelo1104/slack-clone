@@ -2,23 +2,16 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { authReducer } from "./authSlice";
 import User from "../firebase/firebase";
-import { emojiReducer } from "./emojiSlice";
-import { ChatMessage, chatReducer } from "./chatSlice";
+import { emojiReducer, EmojiState } from "./emojiSlice";
+import { chatReducer, ChatState } from "./chatSlice";
 
 export interface State {
   init: any;
   auth: {
     user: User | null;
   };
-  emoji: {
-    show: boolean;
-  };
-  chat: {
-    roomName: string;
-    roomId: string;
-    messages: Array<ChatMessage>;
-    loading: boolean;
-  };
+  emoji: EmojiState;
+  chat: ChatState;
 }
 
 const reducer = combineReducers({
@@ -35,6 +28,9 @@ const rootReducer = (state: any, action: any) => {
       ...state,
       ...action.payload,
     };
+
+    if (state.chat.roomId) nextState.chat.roomId = state.chat.roomId;
+    if (state.chat.roomName) nextState.chat.roomName = state.chat.roomName;
 
     return nextState;
   } else {

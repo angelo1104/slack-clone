@@ -12,6 +12,7 @@ const ChatContainer = styled.div`
   height: 85%;
   overflow-y: overlay;
   padding-right: 4px;
+  padding-top: 15px;
 
   :hover {
     ::-webkit-scrollbar {

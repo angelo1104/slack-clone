@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import { State } from "../../redux/store";
 
 const ChatHeaderContainer = styled.div`
-  height: 12%;
+  height: 10%;
+  width: 100%;
   padding: 6px 15px;
   display: flex;
   justify-content: space-between;
@@ -38,11 +39,14 @@ const Icons = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 7%;
+
+  * {
+    margin: auto 3px;
+  }
 `;
 
 function ChatHeader(): JSX.Element {
-  const { roomId, roomName } = useSelector((state: State) => state.chat);
+  const { roomName } = useSelector((state: State) => state.chat);
 
   return (
     <ChatHeaderContainer>

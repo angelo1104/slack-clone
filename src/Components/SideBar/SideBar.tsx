@@ -4,8 +4,8 @@ import { Create, Add, KeyboardArrowDown } from "@material-ui/icons";
 import SideBarOption from "./SideBarOption";
 import { db } from "../../firebase/firebase";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { AppDispatch } from "../../redux/store";
-import { useDispatch } from "react-redux";
+import { AppDispatch, State } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../../redux/chatSlice";
 
 const SideBarContainer = styled.div`
@@ -21,7 +21,7 @@ const SideBarHead = styled.div`
   display: flex;
   padding: 6px 12px;
   align-items: center;
-  height: 12%;
+  height: 10%;
   justify-content: space-between;
   border-top: 0.5px solid rgba(255, 255, 255, 0.2);
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.2);
@@ -142,6 +142,7 @@ function SideBar(): JSX.Element {
               key={doc.id}
               title={doc.data().name}
               Icon={"#"}
+              bold={true}
               onClick={() => {
                 dispatch(
                   chatActions.SET_ROOM({

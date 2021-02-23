@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import ChatHeader from "./ChatHeader";
 import ChatMain from "./ChatMain";
+import { useSelector } from "react-redux";
+import { State } from "../../redux/store";
+import Thread from "../Thread/Thread";
 
 const ChatContainer = styled.div`
   margin: auto 0;
@@ -11,13 +14,25 @@ const ChatContainer = styled.div`
   height: 100%;
 `;
 
-function ChatBody(): JSX.Element {
-  return (
-    <ChatContainer>
-      <ChatHeader />
+const ChatDiv = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`;
 
-      <ChatMain />
-    </ChatContainer>
+function ChatBody(): JSX.Element {
+  const thread = useSelector((state: State) => state.chat.thread);
+
+  return (
+    <ChatDiv>
+      <ChatContainer>
+        <ChatHeader />
+
+        <ChatMain />
+      </ChatContainer>
+
+      {thread && <Thread />}
+    </ChatDiv>
   );
 }
 

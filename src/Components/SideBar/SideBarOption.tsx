@@ -36,9 +36,10 @@ interface Props {
   title: string;
   Icon: any;
   onClick?: () => void;
+  bold?: boolean;
 }
 
-function SideBarOption({ title, Icon, onClick }: Props): JSX.Element {
+function SideBarOption({ title, Icon, onClick, bold }: Props): JSX.Element {
   function truncate(source: string, size: number) {
     return source.length > size ? source.slice(0, size - 1) + "…" : source;
   }
@@ -51,13 +52,19 @@ function SideBarOption({ title, Icon, onClick }: Props): JSX.Element {
         }
       }}
     >
-      {Icon === Icon + "" && <h5>{Icon}</h5>}
+      {Icon === Icon + "" && (
+        <h5 style={{ opacity: bold ? 1 : 0.9, fontWeight: bold ? 700 : 400 }}>
+          {Icon}
+        </h5>
+      )}
       {Icon !== Icon + "" && (
         <h5 style={{ marginLeft: "-6px" }}>
           <Icon />
         </h5>
       )}
-      <h4>{truncate(title, 20)}</h4>
+      <h4 style={{ opacity: bold ? 1 : 0.9, fontWeight: bold ? 700 : 400 }}>
+        {truncate(title, 20)}
+      </h4>
     </SideBarOptionContainer>
   );
 }
