@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { ChatBubbleOutline, DeleteOutlined } from "@material-ui/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../../redux/chatSlice";
+import { db } from "../../firebase/firebase";
+import { State } from "../../redux/store";
 
 const Icons = styled.div`
   position: absolute;
@@ -85,6 +87,7 @@ interface Props {
 
 function ChatBubble({ image, id, message, user }: Props): JSX.Element {
   const dispatch = useDispatch();
+  const { roomId, messageId } = useSelector((state: State) => state.chat);
 
   return (
     <ChatBubbleContainer>
@@ -93,14 +96,29 @@ function ChatBubble({ image, id, message, user }: Props): JSX.Element {
       <Icons>
         <Icon
           onClick={() => {
-            console.log("hi");
             dispatch(chatActions.SET_MESSAGE_ID(id));
             dispatch(chatActions.SET_THREAD(true));
           }}
         >
           <ChatBubbleOutline />
         </Icon>
-        <Icon>
+        <Icon
+          onClick={() => {
+            if (messageId === id) dispatch(chatActions.SET_MESSAGE_ID(""));
+
+            db.collection("rooms")
+              .doc(roomId)
+              .collection("messages")
+              .doc(id)
+              .delete()
+              .then(() => {
+                console.log("Document successfully deleted!");
+              })
+              .catch((error) => {
+                console.error("Error removing document: ", error);
+              });
+          }}
+        >
           <DeleteOutlined />
         </Icon>
       </Icons>

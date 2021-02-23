@@ -21,7 +21,7 @@ const ChatDiv = styled.div`
 `;
 
 function ChatBody(): JSX.Element {
-  const thread = useSelector((state: State) => state.chat.thread);
+  const { thread, messageId } = useSelector((state: State) => state.chat);
 
   return (
     <ChatDiv>
@@ -31,7 +31,7 @@ function ChatBody(): JSX.Element {
         <ChatMain />
       </ChatContainer>
 
-      {thread && <Thread />}
+      {thread && messageId && <Thread />}
     </ChatDiv>
   );
 }

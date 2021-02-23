@@ -18,7 +18,6 @@ function ChatMain(): JSX.Element {
   return (
     <ChatMainContainer
       onClick={() => {
-        dispatch(emojiActions.SET_SHOW(false));
         dispatch(emojiActions.SET_THREAD_SHOW(false));
       }}
     >

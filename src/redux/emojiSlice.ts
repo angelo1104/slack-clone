@@ -13,6 +13,7 @@ const emojiSlice = createSlice({
   name: "emoji",
   reducers: {
     SET_SHOW(state: EmojiState, action: PayloadAction<boolean>) {
+      console.log("show", action.payload);
       return {
         ...state,
         show: action.payload,
