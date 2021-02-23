@@ -91,7 +91,7 @@ const Icons = styled.div`
 
 function ChatInput(): JSX.Element {
   const { show } = useSelector((state: State) => state.emoji);
-  const { roomId } = useSelector((state: State) => state.chat);
+  const { roomId, roomName } = useSelector((state: State) => state.chat);
   const [message, setMessage] = useState<string>("");
 
   const dispatch: AppDispatch = useDispatch();
@@ -132,7 +132,7 @@ function ChatInput(): JSX.Element {
           multiline={true}
           className={"chat-input"}
           disableUnderline={true}
-          placeholder={"Message # anjali-baby"}
+          placeholder={`Message # ${roomName}`}
           value={message}
           onKeyDown={handleKeyDown}
           onChange={(e) => setMessage(e.target.value)}
