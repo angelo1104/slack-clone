@@ -6,6 +6,8 @@ import { Picker } from "emoji-mart";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, State } from "../../redux/store";
 import { emojiActions } from "../../redux/emojiSlice";
+import { db } from "../../firebase/firebase";
+import firebase from "firebase";
 
 const Container = styled.div`
   padding: 5px 10px;
@@ -13,6 +15,7 @@ const Container = styled.div`
   border-radius: 4px;
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 `;
 
 const Div = styled.div`
@@ -90,10 +93,48 @@ const EmojiPicker = styled(Picker)`
 
 function ThreadInput() {
   const [message, setMessage] = useState("");
+  const { messageId, roomId } = useSelector((state: State) => state.chat);
   const dispatch: AppDispatch = useDispatch();
   const {
     emoji: { threadShow: show },
   } = useSelector((state: State) => state);
+
+  const sendMessage = async () => {
+    try {
+      if (message !== "") {
+        const copyMessage = message;
+        setMessage("");
+
+        const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+        await db
+          .collection("rooms")
+          .doc(roomId)
+          .collection("messages")
+          .doc(messageId)
+          .collection("threads")
+          .add({
+            user: "ishika",
+            userId: "jello",
+            message: copyMessage,
+            userPhoto:
+              "https://i.pinimg.com/originals/de/7f/ed/de7fedb94947ade7029b7a8b08cd676a.jpg",
+            timestamp: timestamp,
+          });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (message.length !== 0) {
+        sendMessage();
+      }
+    }
+  };
 
   return (
     <Div>
@@ -103,6 +144,7 @@ function ThreadInput() {
           placeholder={"Reply..."}
           disableUnderline={true}
           value={message}
+          onKeyDown={handleKeyDown}
           onChange={(e) => setMessage(e.target.value)}
         />
         <Options>
@@ -126,7 +168,7 @@ function ThreadInput() {
           >
             <InsertEmoticon />
           </Icon>
-          <IconButton disabled={message === ""}>
+          <IconButton disabled={message === ""} onClick={() => sendMessage()}>
             <Send className={"send-icon"} />
           </IconButton>
         </Options>
