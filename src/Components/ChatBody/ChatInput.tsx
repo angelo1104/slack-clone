@@ -6,8 +6,9 @@ import { InsertEmoticon, Send } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, State } from "../../redux/store";
 import { emojiActions } from "../../redux/emojiSlice";
-import { db } from "../../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import firebase from "firebase/app";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const InputContainer = styled.div`
   width: 97%;
@@ -93,6 +94,7 @@ function ChatInput(): JSX.Element {
   const { show } = useSelector((state: State) => state.emoji);
   const { roomId, roomName } = useSelector((state: State) => state.chat);
   const [message, setMessage] = useState<string>("");
+  const [user] = useAuthState(auth);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -104,10 +106,9 @@ function ChatInput(): JSX.Element {
         const timestamp = firebase.firestore.FieldValue.serverTimestamp();
         await db.collection("rooms").doc(roomId).collection("messages").add({
           message: copyMessage,
-          user: "ishika",
-          userPhoto:
-            "https://i.pinimg.com/originals/de/7f/ed/de7fedb94947ade7029b7a8b08cd676a.jpg",
-          userId: "jelly",
+          user: user?.displayName,
+          userPhoto: user?.photoURL,
+          userId: user?.uid,
           timestamp: timestamp,
         });
       }

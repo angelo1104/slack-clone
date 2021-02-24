@@ -11,11 +11,11 @@ const firebaseConfig = {
   storageBucket: "slack-f1af1.appspot.com",
   messagingSenderId: "205308401513",
   appId: "1:205308401513:web:db0d47ae7ba0013d2bcff8",
-  measurementId: "G-9R6729X7GC"
+  measurementId: "G-9R6729X7GC",
 };
 
 function initializeApp(): void {
-  if (!firebase.apps.length){
+  if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
 }
@@ -25,7 +25,8 @@ initializeApp();
 const auth: firebase.auth.Auth = firebase.auth();
 const db: firebase.firestore.Firestore = firebase.firestore();
 type User = firebase.User;
+const Provider = new firebase.auth.GoogleAuthProvider();
 
-export {auth, db}
+export { auth, db, Provider };
 
 export default User;

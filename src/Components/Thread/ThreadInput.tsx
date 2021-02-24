@@ -6,8 +6,9 @@ import { Picker } from "emoji-mart";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, State } from "../../redux/store";
 import { emojiActions } from "../../redux/emojiSlice";
-import { db } from "../../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import firebase from "firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Container = styled.div`
   padding: 5px 10px;
@@ -98,6 +99,7 @@ function ThreadInput() {
   const {
     emoji: { threadShow: show },
   } = useSelector((state: State) => state);
+  const [user] = useAuthState(auth);
 
   const sendMessage = async () => {
     try {
@@ -114,11 +116,10 @@ function ThreadInput() {
           .doc(messageId)
           .collection("threads")
           .add({
-            user: "ishika",
-            userId: "jello",
+            user: user?.displayName,
+            userId: user?.uid,
             message: copyMessage,
-            userPhoto:
-              "https://i.pinimg.com/originals/de/7f/ed/de7fedb94947ade7029b7a8b08cd676a.jpg",
+            userPhoto: user?.photoURL,
             timestamp: timestamp,
           });
       }
@@ -126,6 +127,8 @@ function ThreadInput() {
       console.log(e);
     }
   };
+
+  //"https://i.pinimg.com/originals/de/7f/ed/de7fedb94947ade7029b7a8b08cd676a.jpg"
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {

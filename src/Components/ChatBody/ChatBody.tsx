@@ -18,13 +18,19 @@ const ChatDiv = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  background-color: white;
 `;
 
 function ChatBody(): JSX.Element {
-  const { thread, messageId } = useSelector((state: State) => state.chat);
+  const { thread, messageId, dark } = useSelector((state: State) => state.chat);
 
   return (
-    <ChatDiv>
+    <ChatDiv
+      style={{
+        background: dark ? "#1A1D21" : "",
+        color: dark ? "white" : "",
+      }}
+    >
       <ChatContainer>
         <ChatHeader />
 

@@ -46,5 +46,7 @@ const store = configureStore({
 const makeStore: any = () => store;
 
 // export an assembled wrapper
-export const wrapper = createWrapper<State>(makeStore, { debug: true });
+export const wrapper = createWrapper<State>(makeStore, {
+  debug: process.env.NEXT_PUBLIC_NODE_PRODUCTION === "true",
+});
 export type AppDispatch = typeof store.dispatch;

@@ -5,32 +5,32 @@ import { auth } from "../../firebase/firebase";
 import nookies from "nookies";
 import { authActions } from "../../redux/authSlice";
 
-interface Props{
+interface Props {
   children: any;
 }
 
-function AuthProvider({children}: Props):JSX.Element {
-  const state = useSelector((state:State)=> state);
+function AuthProvider({ children }: Props): JSX.Element {
+  const state = useSelector((state: State) => state);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("state", state);
-  },[state])
+  }, [state]);
 
-  useEffect(()=>{
-    const unsubscribe = auth.onIdTokenChanged(async (user)=>{
-      if (!user){
+  useEffect(() => {
+    const unsubscribe = auth.onIdTokenChanged(async (user) => {
+      if (!user) {
         dispatch(authActions.SET_USER(null));
         nookies.set(undefined, "user-token", "");
-      }else {
+      } else {
         const token = await user.getIdToken();
         dispatch(authActions.SET_USER(null));
-        nookies.set(undefined, "user-token", token)
+        nookies.set(undefined, "user-token", token);
       }
-    })
+    });
 
-    return ()=> unsubscribe()
-  },[dispatch])
+    return () => unsubscribe();
+  }, [dispatch]);
 
   useEffect(() => {
     const handle = setInterval(async () => {
@@ -42,11 +42,7 @@ function AuthProvider({children}: Props):JSX.Element {
     return () => clearInterval(handle);
   }, []);
 
-  return(
-    <div>
-      {children}
-    </div>
-  )
+  return <div>{children}</div>;
 }
 
 export default AuthProvider;

@@ -5,6 +5,11 @@ import { verifyUser } from "../firebase/firebaseAdmin";
 import styled from "styled-components";
 import SideBar from "../Components/SideBar/SideBar";
 import ChatBody from "../Components/ChatBody/ChatBody";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/firebase";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import Spinner from "../Components/Spinner/Spinner";
 
 const AppBody = styled.div`
   display: flex;
@@ -12,6 +17,19 @@ const AppBody = styled.div`
 `;
 
 function Home(): JSX.Element {
+  const [user, loading, error] = useAuthState(auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (error) {
+      router.replace("/login");
+    } else {
+      if (!loading && !user) {
+        router.replace("/login");
+      }
+    }
+  }, []);
+
   return (
     <div>
       <Head>
@@ -20,12 +38,16 @@ function Home(): JSX.Element {
       </Head>
 
       <main>
-        <Header />
+        {loading && <Spinner />}
 
-        <AppBody>
-          <SideBar />
-          <ChatBody />
-        </AppBody>
+        {!loading && <Header />}
+
+        {!loading && (
+          <AppBody>
+            <SideBar />
+            <ChatBody />
+          </AppBody>
+        )}
       </main>
     </div>
   );

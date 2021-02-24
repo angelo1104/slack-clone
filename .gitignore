@@ -41,3 +41,5 @@ yarn-error.log*
 .vscode
 
 slack-firebase-admin.json
+
+.vercel

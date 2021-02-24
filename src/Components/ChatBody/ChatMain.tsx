@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import ChatInput from "./ChatInput";
 import Chat from "./Chat";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { emojiActions } from "../../redux/emojiSlice";
+import { State } from "../../redux/store";
 
 const ChatMainContainer = styled.div`
   height: 88%;

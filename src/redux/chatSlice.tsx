@@ -7,6 +7,7 @@ interface ChatState {
   loading: boolean;
   messageId: string;
   thread: boolean;
+  dark: boolean;
 }
 
 interface Message {
@@ -33,6 +34,7 @@ const initialState: ChatState = {
   loading: false,
   messageId: "",
   thread: false,
+  dark: false,
 };
 
 const chatSlice = createSlice({
@@ -74,6 +76,12 @@ const chatSlice = createSlice({
       return {
         ...state,
         thread: action.payload,
+      };
+    },
+    SET_DARK(state: ChatState, action: PayloadAction<boolean>) {
+      return {
+        ...state,
+        dark: action.payload,
       };
     },
   },

@@ -82,6 +82,7 @@ function Chat(): JSX.Element {
             id={message.messageId}
             user={message.user}
             message={message.message}
+            userId={message.userId}
           />
         );
       })}

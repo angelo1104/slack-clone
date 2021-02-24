@@ -1,129 +1,131 @@
-.container {
-  text-align: center;
-}
+.slack-spinner-awesome {
+  .container {
+    text-align: center;
+  }
 
-.text {
-  font-family: "Helvetica Neue", "Helvetica", sans-serif;
-  color: darken(#8a72bb, 15%);
-  padding-top: 2em;
-}
+  .text {
+    font-family: "Helvetica Neue", "Helvetica", sans-serif;
+    color: darken(#8a72bb, 15%);
+    padding-top: 2em;
+  }
 
-@keyframes expandStroke {
-  40% {
-    stroke-dasharray: 0, 85;
-    stroke-dashoffset: 0px;
+  @keyframes expandStroke {
+    40% {
+      stroke-dasharray: 0, 85;
+      stroke-dashoffset: 0px;
+    }
+    45% {
+      stroke-dasharray: 77, 85;
+      stroke-dashoffset: -1px;
+    }
+    52% {
+      stroke-dashoffset: -0px;
+    }
+    85% {
+      stroke-dasharray: 77, 85;
+    }
+    100% {
+      stroke-dasharray: 0, 85;
+    }
   }
-  45% {
-    stroke-dasharray: 77, 85;
-    stroke-dashoffset: -1px;
-  }
-  52% {
-    stroke-dashoffset: -0px;
-  }
-  85% {
-    stroke-dasharray: 77, 85;
-  }
-  100% {
-    stroke-dasharray: 0, 85;
-  }
-}
 
-@keyframes rotateIcon {
-  5% {
+  @keyframes rotateIcon {
+    5% {
+      transform: rotate(-15deg);
+    }
+    40% {
+      transform: rotate(345deg);
+    }
+    100% {
+      transform: rotate(345deg);
+    }
+  }
+
+  @mixin shrinkIcon($translate) {
+    0% {
+      transform: initial;
+    }
+    10% {
+      transform: $translate;
+    }
+    15% {
+      transform: initial;
+    }
+  }
+
+  @keyframes shrinkIcon-1 {
+    @include shrinkIcon(translate(11px, 15px));
+  }
+
+  @keyframes shrinkIcon-2 {
+    @include shrinkIcon(translate(18px, -15px));
+  }
+
+  @keyframes shrinkIcon-3 {
+    @include shrinkIcon(translate(-11px, -22px));
+  }
+
+  @keyframes shrinkIcon-4 {
+    @include shrinkIcon(translate(-18px, 7px));
+  }
+
+  .rotate {
     transform: rotate(-15deg);
+    animation: rotateIcon 3s cubic-bezier(0.72, 0.42, 0.21, 0.94) infinite;
+    animation-delay: -0.5s;
   }
-  40% {
-    transform: rotate(345deg);
+
+  @mixin lineAnimation($animation) {
+    mix-blend-mode: color-burn;
+    animation: $animation 3s infinite cubic-bezier(0.79, 0.14, 0.15, 0.86);
   }
-  100% {
-    transform: rotate(345deg);
-  }
-}
 
-@mixin shrinkIcon($translate) {
-  0% {
-    transform: initial;
-  }
-  10% {
-    transform: $translate;
-  }
-  15% {
-    transform: initial;
-  }
-}
+  svg {
+    height: 1em;
+    width: 1em;
+    font-size: 8em;
+    transform: rotate(-15deg);
 
-@keyframes shrinkIcon-1 {
-  @include shrinkIcon(translate(11px, 15px));
-}
-
-@keyframes shrinkIcon-2 {
-  @include shrinkIcon(translate(18px, -15px));
-}
-
-@keyframes shrinkIcon-3 {
-  @include shrinkIcon(translate(-11px, -22px));
-}
-
-@keyframes shrinkIcon-4 {
-  @include shrinkIcon(translate(-18px, 7px));
-}
-
-.rotate {
-  transform: rotate(-15deg);
-  animation: rotateIcon 3s cubic-bezier(0.72, 0.42, 0.21, 0.94) infinite;
-  animation-delay: -0.5s;
-}
-
-@mixin lineAnimation($animation) {
-  mix-blend-mode: color-burn;
-  animation: $animation 3s infinite cubic-bezier(0.79, 0.14, 0.15, 0.86);
-}
-
-svg {
-  height: 1em;
-  width: 1em;
-  font-size: 8em;
-  transform: rotate(-15deg);
-
-  .st0 {
-    @include lineAnimation(shrinkIcon-1);
-    line {
-      stroke: #62c2a0;
-      transform: translateY(2px);
+    .st0 {
+      @include lineAnimation(shrinkIcon-1);
+      line {
+        stroke: #62c2a0;
+        transform: translateY(2px);
+      }
     }
-  }
 
-  .st1 {
-    @include lineAnimation(shrinkIcon-2);
-    line {
-      stroke: #e01958;
-      transform: translateX(2px);
+    .st1 {
+      @include lineAnimation(shrinkIcon-2);
+      line {
+        stroke: #e01958;
+        transform: translateX(2px);
+      }
     }
-  }
 
-  .st2 {
-    @include lineAnimation(shrinkIcon-3);
-    line {
-      stroke: #ecb32c;
-      transform: translateY(-2px);
+    .st2 {
+      @include lineAnimation(shrinkIcon-3);
+      line {
+        stroke: #ecb32c;
+        transform: translateY(-2px);
+      }
     }
-  }
 
-  .st3 {
-    @include lineAnimation(shrinkIcon-4);
-    line {
-      stroke: #89d3e0;
-      transform: translateX(-2px);
+    .st3 {
+      @include lineAnimation(shrinkIcon-4);
+      line {
+        stroke: #89d3e0;
+        transform: translateX(-2px);
+      }
     }
-  }
 
-  line {
-    stroke-width: 18;
-    stroke-linecap: round;
-    stroke-dashoffset: 0px;
-    stroke-miterlimit: 10;
-    opacity: 0.9;
-    stroke-dasharray: 0, 85;
-    animation: expandStroke 3s infinite cubic-bezier(0.55, 0.09, 0.68, 0.53);
+    line {
+      stroke-width: 18;
+      stroke-linecap: round;
+      stroke-dashoffset: 0px;
+      stroke-miterlimit: 10;
+      opacity: 0.9;
+      stroke-dasharray: 0, 85;
+      animation: expandStroke 3s infinite cubic-bezier(0.55, 0.09, 0.68, 0.53);
+    }
   }
 }

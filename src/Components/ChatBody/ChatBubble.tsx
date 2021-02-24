@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { ChatBubbleOutline, DeleteOutlined } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../../redux/chatSlice";
-import { db } from "../../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import { State } from "../../redux/store";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Icons = styled.div`
   position: absolute;
@@ -83,15 +84,23 @@ interface Props {
   id: string;
   user: string;
   message: string;
+  userId: string;
 }
 
-function ChatBubble({ image, id, message, user }: Props): JSX.Element {
+function ChatBubble({
+  image,
+  id,
+  message,
+  user: older,
+  userId,
+}: Props): JSX.Element {
   const dispatch = useDispatch();
+  const [user] = useAuthState(auth);
   const { roomId, messageId } = useSelector((state: State) => state.chat);
 
   return (
     <ChatBubbleContainer>
-      {/*<Img src={image} />*/}
+      <Img src={image} />
 
       <Icons>
         <Icon
@@ -104,26 +113,28 @@ function ChatBubble({ image, id, message, user }: Props): JSX.Element {
         </Icon>
         <Icon
           onClick={() => {
-            if (messageId === id) dispatch(chatActions.SET_MESSAGE_ID(""));
+            if (userId === user?.uid) {
+              if (messageId === id) dispatch(chatActions.SET_MESSAGE_ID(""));
 
-            db.collection("rooms")
-              .doc(roomId)
-              .collection("messages")
-              .doc(id)
-              .delete()
-              .then(() => {
-                console.log("Document successfully deleted!");
-              })
-              .catch((error) => {
-                console.error("Error removing document: ", error);
-              });
+              db.collection("rooms")
+                .doc(roomId)
+                .collection("messages")
+                .doc(id)
+                .delete()
+                .then(() => {
+                  console.log("Document successfully deleted!");
+                })
+                .catch((error) => {
+                  console.error("Error removing document: ", error);
+                });
+            }
           }}
         >
           <DeleteOutlined />
         </Icon>
       </Icons>
       <ChatContent>
-        <h2>{user}</h2>
+        <h2>{older}</h2>
         <pre>{message}</pre>
       </ChatContent>
     </ChatBubbleContainer>
