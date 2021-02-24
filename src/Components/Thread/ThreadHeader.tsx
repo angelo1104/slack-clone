@@ -7,7 +7,7 @@ import { chatActions } from "../../redux/chatSlice";
 
 const ThreadContainer = styled.div`
   border-bottom: 1px solid lightgray;
-  height: 10%;
+  height: 13%;
   display: flex;
   justify-content: space-between;
 `;

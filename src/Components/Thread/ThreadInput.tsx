@@ -90,6 +90,7 @@ const SlackInput = styled(Input)`
 const EmojiPicker = styled(Picker)`
   height: 70% !important;
   position: absolute !important;
+  z-index: 809 !important;
 `;
 
 function ThreadInput() {
@@ -157,6 +158,7 @@ function ThreadInput() {
               position: "absolute",
               transform: "translate(0, -113.5%)",
               display: show ? "" : "none",
+              zIndex: 200,
             }}
             onSelect={(emoji) =>
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment

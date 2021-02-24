@@ -136,7 +136,6 @@ const ThreadMain = () => {
           />
         );
       })}
-      <ThreadInput />
     </ThreadMainContainer>
   );
 };

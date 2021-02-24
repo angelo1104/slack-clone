@@ -2,6 +2,7 @@ import React from "react";
 import ThreadHeader from "./ThreadHeader";
 import styled from "styled-components";
 import ThreadMain from "./ThreadMain";
+import ThreadInput from "./ThreadInput";
 
 const ThreadContainer = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ function Thread() {
     <ThreadContainer>
       <ThreadHeader />
       <ThreadMain />
+      <ThreadInput />
     </ThreadContainer>
   );
 }
