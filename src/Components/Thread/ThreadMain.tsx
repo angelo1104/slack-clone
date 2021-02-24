@@ -122,7 +122,7 @@ const ThreadMain = () => {
       />
 
       <ReplyNumber>
-        {thread.length} {thread.length > 1 ? "replies" : "reply"}
+        {thread?.length} {thread?.length > 1 ? "replies" : "reply"}
       </ReplyNumber>
       {thread?.map((doc: Thread) => {
         return (

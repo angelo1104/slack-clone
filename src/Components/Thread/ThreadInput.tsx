@@ -134,7 +134,7 @@ function ThreadInput() {
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      if (message.length !== 0) {
+      if (message?.length !== 0) {
         sendMessage();
       }
     }

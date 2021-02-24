@@ -2,7 +2,7 @@ import firebaseAdmin from "firebase-admin";
 import { GetServerSidePropsContext } from "next-redux-wrapper";
 import nookies from "nookies";
 
-if (!firebaseAdmin.apps.length) {
+if (!firebaseAdmin.apps?.length) {
   firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert({
       privateKey:

@@ -42,7 +42,7 @@ interface Props {
 
 function SideBarOption({ title, Icon, onClick, bold }: Props): JSX.Element {
   function truncate(source: string, size: number) {
-    return source.length > size ? source.slice(0, size - 1) + "…" : source;
+    return source?.length > size ? source.slice(0, size - 1) + "…" : source;
   }
 
   return (

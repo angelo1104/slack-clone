@@ -120,7 +120,7 @@ function ChatInput(): JSX.Element {
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      if (message.length !== 0) {
+      if (message?.length !== 0) {
         sendMessage();
       }
     }
@@ -162,7 +162,7 @@ function ChatInput(): JSX.Element {
           </Emoji>
 
           <IconButton
-            disabled={message.length === 0}
+            disabled={message?.length === 0}
             onClick={() => sendMessage()}
           >
             <Send className={"send-icon"} />
