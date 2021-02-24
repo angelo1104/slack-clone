@@ -111,27 +111,29 @@ function ChatBubble({
         >
           <ChatBubbleOutline />
         </Icon>
-        <Icon
-          onClick={() => {
-            if (userId === user?.uid) {
-              if (messageId === id) dispatch(chatActions.SET_MESSAGE_ID(""));
+        {userId === user?.uid && (
+          <Icon
+            onClick={() => {
+              if (userId === user?.uid) {
+                if (messageId === id) dispatch(chatActions.SET_MESSAGE_ID(""));
 
-              db.collection("rooms")
-                .doc(roomId)
-                .collection("messages")
-                .doc(id)
-                .delete()
-                .then(() => {
-                  console.log("Document successfully deleted!");
-                })
-                .catch((error) => {
-                  console.error("Error removing document: ", error);
-                });
-            }
-          }}
-        >
-          <DeleteOutlined />
-        </Icon>
+                db.collection("rooms")
+                  .doc(roomId)
+                  .collection("messages")
+                  .doc(id)
+                  .delete()
+                  .then(() => {
+                    console.log("Document successfully deleted!");
+                  })
+                  .catch((error) => {
+                    console.error("Error removing document: ", error);
+                  });
+              }
+            }}
+          >
+            <DeleteOutlined />
+          </Icon>
+        )}
       </Icons>
       <ChatContent>
         <h2>{older}</h2>
