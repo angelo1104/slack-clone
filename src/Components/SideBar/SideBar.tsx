@@ -124,11 +124,13 @@ function SideBar(): JSX.Element {
           onClick={() => {
             const channelName = prompt("Enter the chat room name.");
 
-            db.collection("rooms")
-              .add({
-                name: channelName,
-              })
-              .catch((e) => console.log(e));
+            if (channelName) {
+              db.collection("rooms")
+                .add({
+                  name: channelName,
+                })
+                .catch((e) => console.log(e));
+            }
           }}
         />
         {chatRooms?.docs?.map((doc: any, index: number) => {
