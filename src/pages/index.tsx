@@ -28,7 +28,7 @@ function Home(): JSX.Element {
         router.replace("/login");
       }
     }
-  }, []);
+  }, [error, user, loading]);
 
   return (
     <div>
