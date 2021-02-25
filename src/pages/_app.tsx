@@ -5,6 +5,7 @@ import { AppProps } from "next/app";
 import { wrapper } from "../redux/store";
 import Head from "next/head";
 import AuthProvider from "../Components/AuthProvider/AuthProvider";
+import Theme from "../Components/ThemeProvider/ThemeProvider";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
@@ -17,7 +18,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         />
       </Head>
       <AuthProvider>
-        <Component {...pageProps} />
+        <Theme>
+          <Component {...pageProps} />
+        </Theme>
       </AuthProvider>
     </>
   );

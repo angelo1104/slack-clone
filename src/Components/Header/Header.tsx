@@ -22,10 +22,11 @@ const HeaderContainer = styled.div`
 const HeaderDiv = styled.div`
   display: flex;
   width: 100%;
-  background-color: var(--slack-color);
+  background-color: ${(props) => props.theme.header.background};
   color: white;
   align-items: center;
   justify-content: center;
+  transition: 350ms background-color ease-in-out;
 
   .MuiSvgIcon-root {
     cursor: pointer;
