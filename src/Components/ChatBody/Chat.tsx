@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { AppDispatch, State } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { emojiActions } from "../../redux/emojiSlice";
-import { db } from "../../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import { chatActions } from "../../redux/chatSlice";
 import ChatBubble from "./ChatBubble";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const ChatContainer = styled.div`
   flex: 1;
@@ -13,6 +14,7 @@ const ChatContainer = styled.div`
   overflow-y: overlay;
   padding-right: 4px;
   padding-top: 15px;
+  scroll-behavior: smooth;
 
   :hover {
     ::-webkit-scrollbar {
@@ -41,6 +43,8 @@ const ChatContainer = styled.div`
 function Chat(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
   const { roomId, messages } = useSelector((state: State) => state.chat);
+  const [user] = useAuthState(auth);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
     try {
@@ -72,8 +76,35 @@ function Chat(): JSX.Element {
     }
   }, [roomId]);
 
+  useEffect(() => {
+    if (!done && messages.length !== 0) {
+      const chat = document.querySelector("#chat-container");
+      if (chat) {
+        chat.scrollTop = chat.scrollHeight;
+        setDone(true);
+      }
+    }
+  }, [done, messages]);
+
+  useEffect(() => {
+    if (messages[messages.length - 1].userId === user?.uid) {
+      const chat = document.querySelector("#chat-container");
+      if (chat) {
+        chat.scrollTop = chat.scrollHeight;
+        setDone(true);
+      }
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    setDone(false);
+  }, [roomId]);
+
   return (
-    <ChatContainer onClick={() => dispatch(emojiActions.SET_SHOW(false))}>
+    <ChatContainer
+      onClick={() => dispatch(emojiActions.SET_SHOW(false))}
+      id={"chat-container"}
+    >
       {messages.map((message) => {
         return (
           <ChatBubble
