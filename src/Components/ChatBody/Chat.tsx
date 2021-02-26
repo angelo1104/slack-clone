@@ -87,7 +87,7 @@ function Chat(): JSX.Element {
   }, [done, messages]);
 
   useEffect(() => {
-    if (messages[messages.length - 1].userId === user?.uid) {
+    if (messages[messages.length - 1]?.userId === user?.uid) {
       const chat = document.querySelector("#chat-container");
       if (chat) {
         chat.scrollTop = chat.scrollHeight;
